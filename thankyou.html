@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Ultimate Birthday Surprise! 🎂</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle, #000428, #004e92);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: white;
+            transition: background 2s ease-in-out;
+        }
+        h1 {
+            font-size: 4em;
+            margin-top: 20vh;
+            text-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+            opacity: 0;
+        }
+        .play-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 24px;
+            border: 2px solid white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+        }
+        .play-btn:hover {
+            background: rgba(255,255,255,0.5);
+            color: black;
+        }
+        #particles-js, #balloons-container, #chocolate-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .balloon, .chocolate {
+            position: absolute;
+            width: 50px;
+            height: auto;
+        }
+        .balloon {
+            animation: floatUp 6s linear infinite;
+        }
+        .chocolate {
+            animation: fall 5s linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(100vh); opacity: 1; }
+            to { transform: translateY(-10vh); opacity: 0; }
+        }
+        @keyframes fall {
+            from { transform: translateY(-10vh); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="balloons-container"></div>
+    <div id="chocolate-container"></div>
+    
+    <h1 id="title">आपकी शुभकामनाओं ने मेरे जन्मदिन को और भी खूबसूरत बना दिया! 🎉✨
+        आपका प्यार और दुआएं मेरे लिए बहुत मायने रखती हैं।
+        दिल से आभार आपका, जो इस खास दिन को और यादगार बना दिया! ❤️🙏
+        
+        सदैव आभारी,
+        Vishwas</h1>
+    <button class="play-btn" onclick="startCelebration()">🎵 Play Music</button>
+    
+    <audio id="bg-music" loop autoplay>
+        <source src="ff.mp3" type="audio/mp3">
+    </audio>
+    
+    <script>
+        gsap.to("#title", { opacity: 1, duration: 2, y: -20, ease: "bounce.out" });
+        gsap.to(".play-btn", { opacity: 1, duration: 2, delay: 1, ease: "power2.inOut" });
+
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 100 },
+                shape: { type: "circle" },
+                size: { value: 3 },
+                move: { speed: 2 },
+                line_linked: { enable: false }
+            }
+        });
+
+        function startCelebration() {
+            document.body.style.background = "radial-gradient(circle, #ff9a9e, #fad0c4)";
+            document.getElementById("title").style.display = "none";
+            document.querySelector(".play-btn").style.display = "none";
+            document.getElementById("bg-music").play();
+            createBalloons();
+            createChocolates();
+        }
+
+        function createBalloons() {
+            const container = document.getElementById("balloons-container");
+            for (let i = 0; i < 15; i++) {
+                let balloon = document.createElement("img");
+                balloon.src = "haa.png"; // 🎈 अपनी Balloon की इमेज डालो
+                balloon.className = "balloon";
+                balloon.style.left = Math.random() * 100 + "vw";
+                balloon.style.animationDuration = (Math.random() * 4 + 4) + "s";
+                container.appendChild(balloon);
+                setTimeout(() => { balloon.remove(); }, 6000);
+            }
+            setTimeout(createBalloons, 2000);
+        }
+
+        function createChocolates() {
+            const container = document.getElementById("chocolate-container");
+            for (let i = 0; i < 20; i++) {
+                let chocolate = document.createElement("img");
+                chocolate.src = "haa.png"; // 🍫 अपनी Chocolate की इमेज डालो
+                chocolate.className = "chocolate";
+                chocolate.style.left = Math.random() * 100 + "vw";
+                chocolate.style.animationDuration = (Math.random() * 3 + 3) + "s";
+                container.appendChild(chocolate);
+                setTimeout(() => { chocolate.remove(); }, 5000);
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById("bg-music").play().catch(() => {
+                console.log("Auto-play blocked. User interaction needed!");
+            });
+            createBalloons();
+            createChocolates();
+        };
+    </script>
+</body>
+</html>
